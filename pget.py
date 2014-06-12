@@ -12,7 +12,7 @@ buf_size = 1024
 def main():
     
     if len(sys.argv) < 2:
-        print 'Usage: python pget.py <url>'
+        print('Usage: python pget.py <url>')
         sys.exit(2)
     
     url = sys.argv[1]
@@ -42,13 +42,14 @@ def main():
         fname = fname.split('?')[0]
         
         if not len(fname):
-            print 'Not enaugh imagination to create file name'
+            print('Not enaugh imagination to create file name')
             sys.exit(1)
     
     f = open(fname, 'wb')
     
     progress = 0
     buffer = response.read(buf_size)
+
     while buffer:
         progress += len(buffer)
         sys.stdout.write('\r%d bytes loaded. ' % progress)
@@ -57,7 +58,7 @@ def main():
         buffer = response.read(buf_size)
     
     f.close()
-    print 'Done!'
+    print('Done!')
 
 if __name__ == '__main__':
     main()
