@@ -9,8 +9,12 @@ def main(name):
     photo = ImageTk.PhotoImage(file=name)
 
     canvas = Canvas(master, width=photo.width(), height=photo.height())
-    canvas.pack()
     canvas.create_image(photo.width() / 2, photo.height() / 2, image=photo)
+    canvas.pack()
+
+    msg = Message(master, text=name + ' (%d X %d)' % (photo.width(), photo.height()), width=photo.width())
+    msg.pack()
+    master.bind('<Escape>', lambda x: master.quit())
     master.mainloop()
 
 if __name__ == '__main__':
