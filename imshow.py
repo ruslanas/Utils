@@ -1,6 +1,8 @@
 # simple command line image viewer
 from Tkinter import *
+from PIL import Image
 import ImageTk
+import imagehash
 import sys
 
 def main(name):
@@ -8,11 +10,13 @@ def main(name):
     master.title(name)
     photo = ImageTk.PhotoImage(file=name)
 
+    hsh = imagehash.average_hash(Image.open(name))
+
     canvas = Canvas(master, width=photo.width(), height=photo.height())
     canvas.create_image(photo.width() / 2, photo.height() / 2, image=photo)
     canvas.pack()
 
-    msg = Message(master, text=name + ' (%d X %d)' % (photo.width(), photo.height()), width=photo.width())
+    msg = Message(master, text=str(hsh) + ' ' + name + ' (%d X %d)' % (photo.width(), photo.height()), width=photo.width())
     msg.pack()
     master.bind('<Escape>', lambda x: master.quit())
     master.mainloop()
