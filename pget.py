@@ -4,46 +4,45 @@
 
 __author__ = 'Ruslanas Balčiūnas'
 
-import urllib2
+try:
+    import urllib.request as urllib2
+except:
+    import urllib2
+
 import sys
-    
+
 buf_size = 1024
-    
+
 def main():
-    
+
     if len(sys.argv) < 2:
         print('Usage: python pget.py <url>')
         sys.exit(2)
-    
+
     url = sys.argv[1]
-    
+
     try:
         response = urllib2.urlopen(url)
     except ValueError as e:
-        print e.message
+        print(e.message)
         sys.exit(1)
     except urllib2.HTTPError as e:
-        print 'HTTP error: %d' % e.code
+        print('HTTP error: %d' % e.code)
         sys.exit(1)
     except urllib2.URLError:
-        print 'URL error'
+        print('URL error')
         sys.exit(1)
             
     meta = response.info()
     
-    print str(meta)
+    print(str(meta))
     
-    fname = meta.getheaders('Content-Disposition')
-    
-    if len(fname):
-        fname = fname[0]
-    else:
-        fname = url.split('/')[-1]
-        fname = fname.split('?')[0]
+    fname = url.split('/')[-1]
+    fname = fname.split('?')[0]
         
-        if not len(fname):
-            print('Not enaugh imagination to create file name')
-            sys.exit(1)
+    if not len(fname):
+        print('Not enaugh imagination to create file name')
+        sys.exit(1)
     
     f = open(fname, 'wb')
     
